@@ -11,6 +11,7 @@ vk_session = vk_api.VkApi(token=token)
 
 session_api = vk_session.get_api()
 longpoll = VkLongPoll(vk_session)
+
 login = 'none'
 admin = '48406925'
 
@@ -77,6 +78,13 @@ while True:
                     print(colored(login + ' подключён\n', 'green'))
                     vk_session.method('messages.send',
                                       {'user_id': event.user_id, 'message': 'Exiss, добро пожаловать!', 'random_id': 0})
+
+                elif response == "!ls" and str(event.peer_id) == str(admin):
+                    print(colored(response, yellow))
+                    vk_session.method('messages.send',
+                                      {'user_id': event.user_id, 'message': 'Exiss, вот Лог-файл с сервера.', 'random_id': 0})
+                    vk_session.method('docs.getMessagesUploadServer',
+                                      {'peer_id': event.peer_id, 'document': 'logging', 'random_id': 0})
 
                 elif response == "!exit" and login == "!exiss":
                     print(colored(login + ' отключён\n', 'green'))
