@@ -1,7 +1,7 @@
 from vk_api.longpoll import VkLongPoll, VkEventType
 from datetime import datetime, timedelta
-from termcolor import colored
-import vk_api
+from termcolor import colored                       #sudo apt-get install termcolor
+import vk_api                                       #sudo apt-get install vk_api
 import random
 import time
 
@@ -12,8 +12,8 @@ vk_session = vk_api.VkApi(token=token)
 session_api = vk_session.get_api()
 longpoll = VkLongPoll(vk_session)
 
-login = 'none'
-admin = '48406925'
+login = 'none'                                      # нужен для входа "профиля админа" и получения доступа к дополнительным командам
+admin = '48406925'                                  # ай-ди моего профиля ВК
 
 print()
 print('           ##############            ')
@@ -37,8 +37,6 @@ print()
 print('============')
 print('[' + colored('+','green') + ']', 'Бот запущен')
 print('[' + colored('+','green') + ']', 'Обработка сообщений запущена')
-#print('*Бот запущен. \n*Обработка сообщений запущена.')
-
 
 while True:
     for event in longpoll.listen():
@@ -78,13 +76,6 @@ while True:
                     print(colored(login + ' подключён\n', 'green'))
                     vk_session.method('messages.send',
                                       {'user_id': event.user_id, 'message': 'Exiss, добро пожаловать!', 'random_id': 0})
-
-                elif response == "!ls" and str(event.peer_id) == str(admin):
-                    print(colored(response, yellow))
-                    vk_session.method('messages.send',
-                                      {'user_id': event.user_id, 'message': 'Exiss, вот Лог-файл с сервера.', 'random_id': 0})
-                    vk_session.method('docs.getMessagesUploadServer',
-                                      {'peer_id': event.peer_id, 'document': 'logging', 'random_id': 0})
 
                 elif response == "!exit" and login == "!exiss":
                     print(colored(login + ' отключён\n', 'green'))
